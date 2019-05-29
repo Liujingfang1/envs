@@ -2,17 +2,18 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   annotations:
-    kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|mysql":null,"~G_v1_Secret|default|pass-dfg7h97cf6":[{"group":"apps","version":"v1","kind":"Deployment","name":"mysql","namespace":"default"}],"~G_v1_Service|default|mysql":null}}'
-    kustomize.config.k8s.io/InventoryHash: 7mgt867b75
+    kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|mysql":null,"~G_v1_Secret|default|pass-b5cdt45c8k":[{"group":"apps","version":"v1","kind":"Deployment","name":"mysql","namespace":"default"}],"~G_v1_Service|default|mysql":null}}'
+    kustomize.config.k8s.io/InventoryHash: 597867f842
   name: cm2
   namespace: default
 ---
 apiVersion: v1
 data:
+  aa: YmI=
   password: c2VjcmV0
 kind: Secret
 metadata:
-  name: pass-dfg7h97cf6
+  name: pass-b5cdt45c8k
   namespace: default
 type: Opaque
 ---
@@ -55,7 +56,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
-              name: pass-dfg7h97cf6
+              name: pass-b5cdt45c8k
         image: mysql:5.6
         name: mysql
         ports:
@@ -67,3 +68,4 @@ spec:
       volumes:
       - emptyDir: {}
         name: mysql-persistent-storage
+

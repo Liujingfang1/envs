@@ -2,8 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   annotations:
-    kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|mysql":null,"~G_v1_Secret|default|pass-b5cdt45c8k":[{"group":"apps","version":"v1","kind":"Deployment","name":"mysql","namespace":"default"}],"~G_v1_Service|default|mysql":null}}'
-    kustomize.config.k8s.io/InventoryHash: 597867f842
+    kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|dev-mysql":null,"~G_v1_Secret|default|dev-pass-d5mc2t9m5c":[{"group":"apps","version":"v1","kind":"Deployment","name":"dev-mysql","namespace":"default"}],"~G_v1_Service|default|dev-mysql":null}}'
+    kustomize.config.k8s.io/InventoryHash: 74kd5m47c2
   name: cm2
   namespace: default
 ---
@@ -13,7 +13,7 @@ data:
   password: c2VjcmV0
 kind: Secret
 metadata:
-  name: pass-b5cdt45c8k
+  name: dev-pass-d5mc2t9m5c
   namespace: default
 type: Opaque
 ---
@@ -23,7 +23,7 @@ metadata:
   annotations: {}
   labels:
     app: mysql
-  name: mysql
+  name: dev-mysql
   namespace: default
 spec:
   ports:
@@ -36,7 +36,7 @@ kind: Deployment
 metadata:
   labels:
     app: mysql
-  name: mysql
+  name: dev-mysql
   namespace: default
 spec:
   revisionHistoryLimit: 2
@@ -56,7 +56,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password
-              name: pass-b5cdt45c8k
+              name: dev-pass-d5mc2t9m5c
         image: mysql:5.6
         name: mysql
         ports:

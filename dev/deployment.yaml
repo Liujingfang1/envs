@@ -39,7 +39,7 @@ metadata:
   name: dev-mysql
   namespace: default
 spec:
-  revisionHistoryLimit: 2
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: mysql

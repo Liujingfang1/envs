@@ -5,7 +5,7 @@ metadata:
     kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|dev-mysql":null,"~G_v1_Secret|default|dev-pass-d5mc2t9m5c":[{"group":"apps","version":"v1","kind":"Deployment","name":"dev-mysql","namespace":"default"}],"~G_v1_Service|default|dev-mysql":null}}'
     kustomize.config.k8s.io/InventoryHash: 74kd5m47c2
   name: cm2
-  namespace: default
+  namespace: kalm-e2e
 ---
 apiVersion: v1
 data:
@@ -14,7 +14,7 @@ data:
 kind: Secret
 metadata:
   name: dev-pass-d5mc2t9m5c
-  namespace: default
+  namespace: kalm-e2e
 type: Opaque
 ---
 apiVersion: v1
@@ -24,7 +24,7 @@ metadata:
   labels:
     app: mysql
   name: dev-mysql
-  namespace: default
+  namespace: kalm-e2e
 spec:
   ports:
   - port: 3306
@@ -37,7 +37,7 @@ metadata:
   labels:
     app: mysql
   name: dev-mysql
-  namespace: default
+  namespace: kalm-e2e
 spec:
   revisionHistoryLimit: 3
   selector:

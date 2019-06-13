@@ -1,9 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kustomize.config.k8s.io/Inventory: '{"current":{"apps_v1_Deployment|default|dev-mysql":null,"~G_v1_Secret|default|dev-pass-d5mc2t9m5c":[{"group":"apps","version":"v1","kind":"Deployment","name":"dev-mysql","namespace":"default"}],"~G_v1_Service|default|dev-mysql":null}}'
+    kustomize.config.k8s.io/InventoryHash: 74kd5m47c2
+  name: cm2
+  namespace: kalm-e2e
+---
+apiVersion: v1
+data:
+  aa: YmI=
+  password: c2VjcmV0
+kind: Secret
+metadata:
+  name: dev-pass-d5mc2t9m5c
+  namespace: kalm-e2e
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    app: mysql
+  name: dev-mysql
+  namespace: kalm-e2e
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
   labels:
     app: mysql
+  name: dev-mysql
+  namespace: kalm-e2e
 spec:
   revisionHistoryLimit: 2
   selector:
@@ -17,42 +51,21 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: mysql:5.6
-        name: mysql
-        env:
+      - env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: pass
               key: password
+              name: dev-pass-d5mc2t9m5c
+        image: mysql:5.6
+        name: mysql
         ports:
         - containerPort: 3306
           name: mysql
         volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
+        - mountPath: /var/lib/mysql
+          name: mysql-persistent-storage
       volumes:
-      - name: mysql-persistent-storage
-        emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  labels:
-    app: mysql
-  annotations: {}
-spec:
-  ports:
-    - port: 3306
-  selector:
-    app: mysql
----
-apiVersion: v1
-data:
-  password: c2VjcmV0
-kind: Secret
-metadata:
-  name: pass
-type: Opaque
+      - emptyDir: {}
+        name: mysql-persistent-storage
 
